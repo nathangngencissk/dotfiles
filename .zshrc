@@ -172,7 +172,10 @@ alias ls='exa -lah'
 export dev="$HOME/.dev"
 export fat="$HOME/.dev/find-a-tutor/web"
 
-# Spaceship configs
+# Ignore interactive commands from history
+export HISTORY_IGNORE="(ls|bg|fg|pwd|exit|cd ..|cd -|pushd|popd)"
+
+#Spaceship configs
 SPACESHIP_PROMPT_ORDER=(
   user          # Username section
   dir           # Current directory section
