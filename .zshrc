@@ -4,7 +4,7 @@ fi
 
 path+="$HOME/.emacs.d/bin"
 
-export ZSH="/Users/nathan.gencissk/.oh-my-zsh"
+export ZSH="/Users/nathan/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -65,8 +65,6 @@ up () {
 }
 
 # aliases
-
-alias nbs="python3 ~/Repositories/scripts/no_block_screen.py"
 alias lab="nohup jupyter notebook --no-browser &"
 
 # Colorize grep output (good for log files)
@@ -91,38 +89,13 @@ alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
 alias ls='exa -lah'
 
 # Variables
-export dev="$HOME/.dev"
-export fat="$HOME/.dev/find-a-tutor/web"
+export dev="$HOME/dev"
 
 # Ignore interactive commands from history
 export HISTORY_IGNORE="(ls|bg|fg|pwd|exit|cd ..|cd -|pushd|popd)"
 
 autoload -Uz compinit
 compinit
-
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
-
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
-
-zplugin light zdharma/fast-syntax-highlighting
-zplugin light zsh-users/zsh-autosuggestions
-zplugin light zsh-users/zsh-history-substring-search
-zplugin light zsh-users/zsh-completions
-zplugin light buonomo/yarn-completion
 
 [[ -f /opt/homebrew/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /opt/homebrew/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
 # tabtab source for sls package
@@ -142,9 +115,27 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 # Created by `pipx` on 2022-06-08 14:51:07
-export PATH="$PATH:/Users/nathan.gencissk/.local/bin"
+export PATH="$PATH:/Users/nathan/.local/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
+if [[ ! -f $HOME/.zi/bin/zi.zsh ]]; then
+  print -P "%F{33}▓▒░ %F{160}Installing (%F{33}z-shell/zi%F{160})…%f"
+  command mkdir -p "$HOME/.zi" && command chmod go-rwX "$HOME/.zi"
+  command git clone -q --depth=1 --branch "main" https://github.com/z-shell/zi "$HOME/.zi/bin" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+source "$HOME/.zi/bin/zi.zsh"
+autoload -Uz _zi
+(( ${+_comps} )) && _comps[zi]=_zi
+# examples here -> https://z.digitalclouds.dev/ecosystem/annexes
+zicompinit # <- https://z.digitalclouds.dev/docs/guides/commands
+
+zplugin light zdharma/fast-syntax-highlighting
+zplugin light zsh-users/zsh-autosuggestions
+zplugin light zsh-users/zsh-history-substring-search
+zplugin light zsh-users/zsh-completions
+zplugin light buonomo/yarn-completion
